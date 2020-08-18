@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "SerialConnect";
+}
+
+<h2>SerialConnect</h2>
+
+@using (Html.BeginForm("SerialConnect", "Home", FormMethod.Post))
+{
+   
+    <input type="hidden" value="OFF" name="state" />
+     <input type="submit" value="OFF" />
+}
+@using (Html.BeginForm("SerialConnect", "Home", FormMethod.Post))
+{
+    <input type="hidden" value="ON" name="state" />
+    <input type="submit" value="ON" />
+}

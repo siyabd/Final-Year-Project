@@ -1,0 +1,110 @@
+﻿@model  IISFINALPROJECT.Models.A
+@{
+    ViewBag.Title = "DashboardAdmin";
+    if (Session["userID"] == null)
+    {
+       
+        //Response.Redirect("/Home/Login");
+    }
+
+    string[] assigments = { "assign1", "Assign2" };
+    string[] identity = { "identity1", "identity2" };
+    int num = 0;
+}
+<link href="~/Content/bootstrap.min.cc" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/back.css" type="text/css" media="all">
+<script>
+    if (ViewBag.Mark != null)
+        window.alert(ViewBag.Mark);
+
+    
+</script>
+<div class="body">
+    <div class="row">
+
+        <div class="col-md-2">
+            <h3>Categories</h3>
+            <div class="list-group">
+                <a href="category.html" class="list-group-item">
+                    Send a message
+                </a>
+                <a href="category.html" class="list-group-item">
+                    Send Email
+                </a>
+                <a href="addModule" class="list-group-item">
+                    Add a module
+                </a>
+
+                <a href="category.html" class="list-group-item">
+                    View statistic
+                </a>
+                <a href="category.html" class="list-group-item">
+                    Convert to SpreadSheet
+                </a>
+                <a href="editProfile" class="list-group-item">
+                    Edit Profile
+                </a>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-10">
+            <h2>Welcome to the Administrator Dashboard @ViewBag.student.Name </h2>
+            <table class="table table-striped table-bordered">
+                @foreach (var module in Model.ListModule)
+                {
+                    <tr>
+                        <td>@module.Name</td>
+                        <td>@module.Lecture</td>
+                        <td>@module.Key</td>
+
+                    </tr>
+
+                    foreach (var student in Model.ListStudent)
+                    {
+                        <tr>
+                            <td>@student.Name</td>
+                            <td>@student.Surname</td>
+                            <td>@student.Sudent_Number</td>
+                        </tr>
+
+                        using (Html.BeginForm("updateMarks", "Home", FormMethod.Post))
+                        {
+                            foreach (var assign in Model.ListStudentAssignment)
+                            {
+                                if (student.Sudent_Number == assign.StudentNumber)
+                                {
+                                    foreach (var assiList in Model.ListAssignment)
+                                    {
+                                        if (assiList.Id == assign.Assignment)
+                                        {
+                                            if (num < 2)
+                                            {
+                                                <tr>
+                                                    <td>@assiList.Assigment</td>
+                                                    <td>
+                                                        <input type="text" value="@assign.Mark" name="@assigments[num]" />
+                                                        <input type="hidden" value="@assign.Id,@assign.Assignment" name="@identity[num]" />
+                                                    </td>
+                                                    @(num++);
+                                                </tr>}
+                                        }
+                                    }
+                                }
+                            }
+                            <tr>
+                                <td>
+                                    <input type="text" value="@student.Sudent_Number" name="Studentno" />
+                                </td>
+                                <td><input type="submit" value="Save" /></td>
+                            </tr>
+
+                        }
+
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

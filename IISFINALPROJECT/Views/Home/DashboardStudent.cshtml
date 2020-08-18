@@ -1,0 +1,91 @@
+﻿@model  IISFINALPROJECT.Models.A
+@{
+
+    ViewBag.Title = "DashboardStudent";  
+    if (Session["userID"] == null)
+    {
+       // Response.Redirect("/Home/Login");
+    }
+}
+<link href="~/Content/bootstrap.min.cc" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/back.css" type="text/css" media="all">
+
+<div class="body">
+    <div class="row">
+        <div class="col-md-2">
+            <h3>Categories</h3>
+            <div class="list-group">
+
+                <a href="category.html" class="list-group-item">
+                    Send Message
+                </a>
+                <a href="registerModule" class="list-group-item">
+                    Register a Module
+                </a>
+                <a href="category.html" class="list-group-item">
+                    View Marks
+                </a>
+
+                <a href="editProfile" class="list-group-item">
+                    Edit Profile
+                </a>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-9">
+            <h2>Welcome to the student Dashboard</h2>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                    </tr>
+                </thead>
+                @foreach (var course in Model.ListCourse)
+                {
+                    <tr><td><center>@course.Name</center></td> <td></td></tr>
+
+                    foreach (var studentModule in Model.ListStudentModules)
+                    {
+                        foreach (var module in Model.ListModule)
+                        {
+                            if (module.Key == studentModule.ModuleCode)
+                            {
+                                <tr><td backgroud-color:Blue><strong><center>@module.Name</center></strong></td></tr>
+                                <tr><td>Assignment</td><td>Weight</td><td>Mark</td></tr>
+
+                                foreach (var assin in Model.ListAssignment)
+                                {
+                                    if (assin.Module == studentModule.ModuleCode)
+                                    {
+                                        foreach (var assinStudent in Model.ListStudentAssignment)
+                                        {
+                                            if (assinStudent.Assignment == assin.Id)
+                                            {
+                                                <tr>
+                                                    <td>@assin.Assigment</td>
+                                                    <td>@assin.Mark</td>
+                                                    <td>@assinStudent.Mark</td>
+                                                </tr>
+                                            }
+
+
+                                        }
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+
+
+            </table>
+
+        </div>
+    </div>
+</div>

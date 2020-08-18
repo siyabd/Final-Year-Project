@@ -1,0 +1,71 @@
+﻿@model  IISFINALPROJECT.Models.A
+@{
+    ViewBag.Title = "DashboardAdmin";
+    if (Session["userID"] == null)
+    {
+       
+        //Response.Redirect("/Home/Login");
+    }
+
+    string[] mod = { "mod1", "mod2","mod3" };
+    int num = 0;
+}
+<link href="~/Content/bootstrap.min.cc" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/back.css" type="text/css" media="all">
+<script>
+    if (ViewBag.Mark != null)
+        window.alert(ViewBag.Mark);
+
+    
+</script>
+
+<div class="body">
+    <div class="row">
+        <div class="col-md-2">
+            <h3>Categories</h3>
+            <div class="list-group">
+                <a href="category.html" class="list-group-item">
+                    Send a message
+                </a>
+                <a href="category.html" class="list-group-item">
+                    Send Email
+                </a>
+                <a href="addModule" class="list-group-item">
+                    Add a module
+                </a>
+
+                <a href="category.html" class="list-group-item">
+                    View statistic
+                </a>
+                <a href="category.html" class="list-group-item">
+                    Convert to SpreadSheet
+                </a>
+                <a href="editProfile" class="list-group-item">
+                    Edit Profile
+                </a>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-10">
+            <h2>Welcome to the Administrator Dashboard @ViewBag.student.Name </h2>
+            <table class="table table-striped">
+                @foreach (var module in Model.ListModule)
+                {
+                    <tr>
+                          <td>@module.Name</td>
+                            <td>@module.Lecture</td>
+                            <td>@module.Key</td>
+                        @using (Html.BeginForm("DashboardAdmin", "Home", FormMethod.Post))
+                            {
+                            <td><input type="hidden" value="@module.Key" name="module" /></td>
+                            <td><input type="submit" value="View Students" /></td>
+                        }
+                    </tr>
+                    @(num++);
+                }
+            </table>
+        </div>
+    </div>
+</div>
